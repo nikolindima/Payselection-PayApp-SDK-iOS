@@ -26,5 +26,6 @@ let package = Package(
         .testTarget(
             name: "PayselectionPayAppSDKTests",
             dependencies: ["PayselectionPayAppSDK"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )

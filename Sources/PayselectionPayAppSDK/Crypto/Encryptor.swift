@@ -41,7 +41,7 @@ class Encryptor: NSObject {
         webView = WKWebView(frame: .zero, configuration: configuration)
         guard let webView else { return }
         webView.navigationDelegate = self
-        guard let url = Bundle.module.url(forResource: "jssource", withExtension: "html") else {
+        guard let url = Bundle.payselectionPayAppMain.url(forResource: "jssource", withExtension: "html") else {
             print("Can not find file jssource.html")
             return
         }

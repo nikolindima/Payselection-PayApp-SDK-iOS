@@ -11,6 +11,10 @@ extension Bundle {
     class var payselectionPayAppMain: Bundle {
         let bundle = Bundle.init(for: Encryptor.self)
         let bundleUrl = bundle.url(forResource: "PayselectionPayAppSDK", withExtension: "bundle")
+        #if SWIFT_PACKAGE
+        return Bundle.module
+        #else
         return Bundle.init(url: bundleUrl!)!
+        #endif
     }
 }

@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
     spec.name             = 'PayselectionPayAppSDK'
     spec.summary          = 'Core library that allows you to use internet acquiring from Payselection in your app'
-    spec.version          = '1.0.0'
+    spec.version          = '1.0.1'
     spec.license          = { :type => 'MIT', :file => 'LICENSE' }
     spec.author           = { 'Payselection' => 'support@payselection.com' }
     spec.homepage         = 'https://payselection.com'

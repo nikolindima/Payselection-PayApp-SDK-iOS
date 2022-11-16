@@ -32,32 +32,37 @@ public class PaySelectionApi {
                                                          paymentMethod: .card,
                                                         paymentDetails: cardDetails,
                                                          messageExpiration: paymentFormData.messageExpiration)
-        let encryptor = Encryptor()
-        encryptor.makeCryptogram(pubKey: merchantCreds.publicKey, cardDetails: secretPaymentDetails) { cryptogram in
-            let paymentDetails = PaymentDetails(type: .internal , payToken: cryptogram)
-            let paymentData = PaymentData(orderId: UUID().uuidString,
-                                          amount: transactionDetails.amount,
-                                          currency: transactionDetails.currency,
-                                          description: paymentFormData.description,
-                                          customerInfo: paymentFormData.customerInfo,
-                                          paymentMethod: .token,
-                                          paymentDetails: paymentDetails)
-            
-            guard let requestBodyString = self.getRequestBody(from: paymentData) else { return }
-            let headers = self.generateHeaders(merchantId: self.merchantCreds.merchantId,
-                                               secretKey: self.merchantCreds.secretKey,
-                                          httpMethod: .post,
-                                          requestURL: PayselectionHTTPResource.pay.rawValue,
-                                          requestBody: requestBodyString)
-            let request = PayRequest(body: paymentData, headers: headers)
-            request.execute(
-            onSuccess: { result in
-                completion(.success(result))
-            },
-            onError: { error in
-                completion(.failure(error))
-            })
+
+     
+        guard let token = try? Encryptor().makeCryptogram(publicKey: merchantCreds.publicKey,
+                                                          privateDetails: secretPaymentDetails) else {
+            completion(.failure(PayselectionError.encryptionError))
+            return
         }
+     
+        let paymentDetails = PaymentDetails(type: .internal , payToken: token)
+        let paymentData = PaymentData(orderId: UUID().uuidString,
+                                      amount: transactionDetails.amount,
+                                      currency: transactionDetails.currency,
+                                      description: paymentFormData.description,
+                                      customerInfo: paymentFormData.customerInfo,
+                                      paymentMethod: .token,
+                                      paymentDetails: paymentDetails)
+        
+        guard let requestBodyString = self.getRequestBody(from: paymentData) else { return }
+        let headers = self.generateHeaders(merchantId: self.merchantCreds.merchantId,
+                                           secretKey: self.merchantCreds.secretKey,
+                                      httpMethod: .post,
+                                      requestURL: PayselectionHTTPResource.pay.rawValue,
+                                      requestBody: requestBodyString)
+        let request = PayRequest(body: paymentData, headers: headers)
+        request.execute(
+        onSuccess: { result in
+            completion(.success(result))
+        },
+        onError: { error in
+            completion(.failure(error))
+        })
     }
     
     public func getOrderStatus(orderId: String,

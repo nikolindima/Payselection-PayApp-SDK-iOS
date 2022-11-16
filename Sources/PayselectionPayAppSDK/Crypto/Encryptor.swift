@@ -6,46 +6,78 @@
 //
 
 import Foundation
-import WebKit
+import CryptoSwift
+import secp256k1
 
-
-class Encryptor: NSObject {
+struct Encryptor {
     
-    private var webView: WKWebView?
-    private let jsMessageHandler = "jsMessageHandler"
-    private let configuration = WKWebViewConfiguration()
-    
-    private var pubKey = ""
-    private var message = ""
-    private var onCryptogramFetched: ((String) -> Void)?
-    
-    func makeCryptogram(pubKey: String,
-                        cardDetails: PaymentPrivateDetails,
-                        completion: @escaping (String) -> Void) {
-        self.pubKey = pubKey
+    func makeCryptogram(publicKey: String, privateDetails: PaymentPrivateDetails) throws -> String {
         do {
-            let message = try getJSONString(from: cardDetails)
-            self.message = message
+            let message = try getJSONString(from: privateDetails)
+            return try encrypt(pubKey: publicKey, message: message)
         } catch {
-            return
-        }
-        intializeWebView()
-        onCryptogramFetched = { [weak self] cryptogram in
-            completion(cryptogram)
-            self?.onCryptogramFetched = nil
+            throw error
         }
     }
+        
+    private func encrypt(pubKey: String, message: String) throws -> String {
+        
+        let messageBytes = [UInt8](message.data(using: .utf8)!)
+        let pubKeyBytes = Array(hex: pubKey)
+     
+        
+        do {
+            let ephemeralPrivateKey = try secp256k1.Signing.PrivateKey(format: .uncompressed)
+            let ephemeralPublicKey = [UInt8](ephemeralPrivateKey.publicKey.rawRepresentation)
+            let sharedSecret = try derive(pubKey: pubKeyBytes,
+                                          ephemeralPrivateKey: [UInt8](ephemeralPrivateKey.rawRepresentation))
+            let sharedKeyHash = Hash.sha512(sharedSecret)
+
+            let iv = AES.randomIV(AES.blockSize)
+            let aesKey = (sharedKeyHash[0..<32]).bytes
+            let macKey = (sharedKeyHash[32..<64]).bytes
             
-    private func intializeWebView() {
-        configuration.userContentController.add(self, name: jsMessageHandler)
-        webView = WKWebView(frame: .zero, configuration: configuration)
-        guard let webView else { return }
-        webView.navigationDelegate = self
-        guard let url = Bundle.payselectionPayAppMain.url(forResource: "jssource", withExtension: "html") else {
-            print("Can not find file jssource.html")
-            return
+            let cipherMsg = try aesEncrypt(key: aesKey, iv: iv, message: messageBytes)
+
+            let macGenerator = HMAC(key: macKey, variant: .sha2(.sha256))
+            let dataToMac = iv + ephemeralPublicKey + cipherMsg
+
+            let mac = try macGenerator.authenticate(dataToMac)
+
+            let signedMesage = SignedMessage(encryptedMessage: cipherMsg.toBase64(),
+                                             ephemeralPublicKey: ephemeralPublicKey.toBase64())
+
+
+            let signedMessageStr = try getJSONString(from: signedMesage)
+            let encrypdedData = EncryptedData(signedMessage: signedMessageStr,
+                                              iv: iv.toBase64(),
+                                              tag: mac.toBase64())
+
+            let encrMsg = try getJSONString(from: encrypdedData)
+            
+            return(encrMsg.toBase64())
+        } catch {
+            throw error
         }
-        webView.loadFileURL(url, allowingReadAccessTo: url)
+    }
+    
+    private func derive(pubKey: [UInt8], ephemeralPrivateKey: [UInt8]) throws -> [UInt8] {
+        do {
+            let publicKey = try secp256k1.Signing.PublicKey(rawRepresentation: pubKey, format: .uncompressed)
+            let sharedPoint = try publicKey.multiply(ephemeralPrivateKey, format: .uncompressed)
+            return sharedPoint.xonly.bytes
+        } catch {
+            throw error
+        }
+    }
+    
+    private func aesEncrypt(key: [UInt8], iv: [UInt8], message: [UInt8]) throws -> [UInt8] {
+        do {
+            let cipher = try AES(key: key, blockMode: CBC(iv: iv))
+            return try message.encrypt(cipher: cipher)
+        } catch {
+            throw error
+        }
     }
     
     private func getJSONString(from object: Codable) throws -> String {
@@ -56,24 +88,6 @@ class Encryptor: NSObject {
             return String(data: data, encoding: .utf8)!
         } catch {
             throw error
-        }
-    }
-}
-
-extension Encryptor: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.evaluateJavaScript("makeCryptogram('\(pubKey)','\(message)')")
-    }
-}
-
-extension Encryptor: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == jsMessageHandler {
-            guard let dict = message.body as? [String: AnyObject],
-                  let cryptogram = dict["cryptogram"] as? String else {return }
-            self.onCryptogramFetched?(cryptogram)
-            webView?.stopLoading()
-            webView = nil
         }
     }
 }

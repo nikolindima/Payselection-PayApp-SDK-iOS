@@ -17,4 +17,5 @@ public enum PayselectionError: Error {
     case unknownError
     case invalidURL
     case invalidResponse
+    case encryptionError
 }

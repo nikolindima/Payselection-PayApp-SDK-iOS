@@ -10,13 +10,8 @@ PaySelection PayApp SDK позволяет интегрировать прием
 
 ```
  dependencies: [
-  .package(url: "https://github.com/Payselection/Payselection-PayApp-SDK-iOS", from: "1.0.1"),
+  .package(url: "https://github.com/Payselection/Payselection-PayApp-SDK-iOS", from: "1.0.2"),
   ]
-```
-#### Cocoapods
-
-```
- pod 'PayselectionPayAppSDK'
 ```
 
 ### Полезные ссылки

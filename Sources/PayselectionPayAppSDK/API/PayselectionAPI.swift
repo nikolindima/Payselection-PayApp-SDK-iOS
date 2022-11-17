@@ -8,7 +8,7 @@
 import Foundation
 import CryptoKit
 
-public class PaySelectionApi {
+public class PayselectionAPI {
     
     public typealias PayselectionRequestCompletion<T> = (Result<T, Error>) -> Void
     

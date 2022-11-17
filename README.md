@@ -25,7 +25,7 @@ PaySelection PayApp SDK позволяет интегрировать прием
 * **Sources/PayselectionPayAppSDK** - Исходный код SDK
 
 
-### Возможности PaySelection PayApp SDK:
+### Возможности Payselection PayApp SDK:
 
 Вы можете с помощью SDK:
 
@@ -34,9 +34,9 @@ PaySelection PayApp SDK позволяет интегрировать прием
 * получить детализацию по конкретной транзации
 * запросить возврат по заказу
 
-### Инициализация PaySelection SDK:
+### Инициализация Payselection API:
 
-1.	Создайте структуру с данными из личного кабинета мерчанта
+1.	Создайте экземпляр структуры с данными из личного кабинета мерчанта
 
 ```
 let merchantId = "20176" // Site ID
@@ -48,13 +48,13 @@ let merchantCreds = MerchantCredentials(merchantId: merchantId,
                                         secretKey: merchantSecretKey)
 ```
 
-2.	Создайте экземпляр PaySelectionApi для работы с API
+2.	Создайте экземпляр PayselectionApi для работы с API
 
 ```
 let api = PaySelectionApi(merchantCredentials: merchantCreds)
 ```
 
-### Оплата с использованием PaySelection SDK:
+### Оплата с использованием Payselection SDK:
 
 1. Создайте структуру CustomerInfo с информацией о клиенте, обязактельным является лишь поле "ip", остальные - опциональные.
 
@@ -63,7 +63,7 @@ let customerInfo = CustomerInfo(ip: "10.0.42.42")
 ```
 
 
-2. Создайте структуру PaymentFormData с информацией о транзакции и данными карты, передав туда customerInfo. Внимание! Все поля обязательны для заполнения. Так же необходимо валидировать передаваемые данные, иначе сервер вернет ошибку. Подробнее о форматах можно прочесть в документации  [Payselection API](https://api.payselection.com/#section/Request-signature).
+2. Создайте экземпляр структуры PaymentFormData с информацией о транзакции и данными карты, передав туда customerInfo. Внимание! Все поля обязательны для заполнения. Так же необходимо валидировать передаваемые данные, иначе сервер вернет ошибку. Подробнее о форматах можно прочесть в документации  [Payselection API](https://api.payselection.com/#section/Request-signature).
 
 ```
  let messageExpiration = String(Int64(Date().timeIntervalSince1970 * 1000 + 86400000)) // 24 часа 
@@ -94,7 +94,7 @@ let customerInfo = CustomerInfo(ip: "10.0.42.42")
         }
 ```
 
-### Другие методы PaySelection SDK:
+### Другие методы Payselection API:
 
 1. Получение всех транзакций по заказку
 

@@ -56,7 +56,7 @@ let api = PaySelectionApi(merchantCredentials: merchantCreds)
 
 ### Оплата с использованием Payselection SDK:
 
-1. Создайте структуру CustomerInfo с информацией о клиенте, обязактельным является лишь поле "ip", остальные - опциональные.
+1. Создайте экземпляр структуры CustomerInfo с информацией о клиенте, обязательным является лишь поле "ip", остальные - опциональные.
 
 ```
 let customerInfo = CustomerInfo(ip: "10.0.42.42")

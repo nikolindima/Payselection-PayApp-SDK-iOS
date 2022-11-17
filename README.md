@@ -48,10 +48,10 @@ let merchantCreds = MerchantCredentials(merchantId: merchantId,
                                         secretKey: merchantSecretKey)
 ```
 
-2.	Создайте экземпляр PayselectionApi для работы с API
+2.	Создайте экземпляр PayselectionAPI для работы с API
 
 ```
-let api = PaySelectionApi(merchantCredentials: merchantCreds)
+let api = PayselectionAPI(merchantCredentials: merchantCreds)
 ```
 
 ### Оплата с использованием Payselection SDK:

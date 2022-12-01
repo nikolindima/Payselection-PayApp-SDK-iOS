@@ -41,7 +41,7 @@ public class PayselectionAPI {
         }
      
         let paymentDetails = PaymentDetails(type: .internal , payToken: token)
-        let paymentData = PaymentData(orderId: UUID().uuidString,
+        let paymentData = PaymentData(orderId: paymentFormData.orderId,
                                       amount: transactionDetails.amount,
                                       currency: transactionDetails.currency,
                                       description: paymentFormData.description,

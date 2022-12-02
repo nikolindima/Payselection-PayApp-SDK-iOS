@@ -99,7 +99,7 @@ public struct StateDetails3ds: Codable {
 public enum TransactionState: String, Codable {
     case success
     case preauthorized
-    case ending
+    case pending
     case voided
     case declined
     case waitFor3ds = "wait_for_3ds"

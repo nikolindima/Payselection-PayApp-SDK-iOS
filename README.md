@@ -30,9 +30,7 @@ PaySelection PayApp SDK позволяет интегрировать прием
 Вы можете с помощью SDK:
 
 * создать заказ и совершить платеж картой
-* получить все транзакции по заказу
-* получить детализацию по конкретной транзации
-* запросить возврат по заказу
+* получить статуса транзакции 
 
 ### Инициализация Payselection API:
 
@@ -41,11 +39,9 @@ PaySelection PayApp SDK позволяет интегрировать прием
 ```
 let merchantId = "20176" // Site ID
 let pubkey = "04a30442ffd031bd4f1837f1f3651e6b0bb296b3cc837462b93967cb8ad0faf3c6d011d46b94377832ddfcbd0bb05de8084a9dd7048ee91d172f075ff3e33e832d" // Публичный ключ
-let merchantSecretKey = "PE4svxAN4Rm5RvUf" // Секретный ключ
 
 let merchantCreds = MerchantCredentials(merchantId: merchantId, 
-                                        publicKey: pubkey, 
-                                        secretKey: merchantSecretKey)
+                                        publicKey: pubkey)
 ```
 
 2.	Создайте экземпляр PayselectionAPI для работы с API
@@ -87,6 +83,8 @@ let customerInfo = CustomerInfo(ip: "10.0.42.42")
  api.pay(paymentFormData: paymentFormData) { result in
             switch result {
             case .success(let payResult):
+                // в результате ответа приходит transactionId и transactionSecretKey
+                // "transactionSecretKey" служит параметром запроса получения статуса по transactionId
                 print(payResult)
             case .failure(let error):
                 print(error)
@@ -96,10 +94,11 @@ let customerInfo = CustomerInfo(ip: "10.0.42.42")
 
 ### Другие методы Payselection API:
 
-1. Получение всех транзакций по заказку
+1. Получение статуса одной транзакции
 
 ```
- api.getOrderStatus(orderId: payResult.orderId) { result in
+ api.getTransactionStatus(transactionId: payResult.transactionId,
+                          transactionKey: payResult.transactionSecretKey) { result in
             switch result {
             case .success(let statusResult):
                 print(statusResult)
@@ -109,53 +108,6 @@ let customerInfo = CustomerInfo(ip: "10.0.42.42")
         }
 ```
 
-2. Получение статуса одной транзакции
-
-```
- api.getTransactionStatus(transactionId: payResult.transactionId) { result in
-            switch result {
-            case .success(let statusResult):
-                print(statusResult)
-            case .failure(let error):
-                print(error)
-            }
-        }
-```
-
-3. Оформление возврата
-
-```
- let refundData = RefundData(transactionId: payResult.transactionId,
-                                    amount: payResult.amount,
-                                    currency: payResult.currency)
-        
- api.refund(refundData: refundData) { result in
-        switch result {
-        case .success(let refundResult):
-            print(refundResult)
-        case .failure(let error):
-            print(error)
-        }
-     }
-```
-
-4. Завершения одностадийной/двухстадийной операции оплаты
-
-```
-let confirmData = ConfirmData(transactionId: payResult.orderId,
-                                      orderId: payResult.transactionId,
-                                      paReq: "String",
-                                      md: "String")
-        
- api.confirm(confirmData: confirmData) { result in
-         switch result {
-         case .success(let confirmResult):
-             print(confirmResult)
-         case .failure(let error):
-             print(error)
-         }
-      }
-```
 
 ### Поддержка
 

@@ -13,11 +13,15 @@ public struct PayResult: Codable {
     public var transactionId: String
     public var amount: String
     public var currency: String
+    public var redirectUrl: String
+    public var transactionSecretKey: String
     
     enum CodingKeys: String, CodingKey {
         case orderId = "OrderId"
         case transactionId = "TransactionId"
         case amount = "Amount"
         case currency = "Currency"
+        case redirectUrl = "RedirectUrl"
+        case transactionSecretKey = "TransactionSecretKey"
     }
 }

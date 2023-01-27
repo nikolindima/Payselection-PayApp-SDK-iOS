@@ -10,7 +10,7 @@ PaySelection PayApp SDK позволяет интегрировать прием
 
 ```
  dependencies: [
-  .package(url: "https://github.com/Payselection/Payselection-PayApp-SDK-iOS", from: "1.1.0"),
+  .package(url: "https://github.com/Payselection/Payselection-PayApp-SDK-iOS", from: "2.0.0"),
   ]
 ```
 
@@ -37,8 +37,8 @@ PaySelection PayApp SDK позволяет интегрировать прием
 1.	Создайте экземпляр структуры с данными из личного кабинета мерчанта
 
 ```
-let merchantId = "20176" // Site ID
-let pubkey = "04a30442ffd031bd4f1837f1f3651e6b0bb296b3cc837462b93967cb8ad0faf3c6d011d46b94377832ddfcbd0bb05de8084a9dd7048ee91d172f075ff3e33e832d" // Публичный ключ
+let merchantId = "20337" // Site ID
+let pubkey = "04a36ce5163f6120972a6bf46a76600953ce252e8d513e4eea1f097711747e84a2b7bf967a72cf064fedc171f5effda2b899e8c143f45303c9ee68f7f562951c88" // Публичный ключ
 
 let merchantCreds = MerchantCredentials(merchantId: merchantId, 
                                         publicKey: pubkey)

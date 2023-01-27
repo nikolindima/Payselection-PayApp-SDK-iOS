@@ -83,13 +83,19 @@ let customerInfo = CustomerInfo(ip: "10.0.42.42")
  api.pay(paymentFormData: paymentFormData) { result in
             switch result {
             case .success(let payResult):
-                // в результате ответа приходит transactionId и transactionSecretKey
+                // в результате ответа приходят: transactionId, transactionSecretKey и redirectUrl
                 // "transactionSecretKey" служит параметром запроса получения статуса по transactionId
+                // "redirectUrl", ссылка на веб-интерфейс платежной системы 
                 print(payResult)
             case .failure(let error):
                 print(error)
             }
         }
+        //
+```
+
+5. Отобразите WebView с полученной ссылкой на веб-интерфейс платежной системы (параметр "redirectUrl" возвращается в ответе метода "pay")
+
 ```
 
 ### Другие методы Payselection API:

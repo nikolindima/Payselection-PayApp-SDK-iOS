@@ -98,6 +98,7 @@ let customerInfo = CustomerInfo(ip: "10.0.42.42")
 
 ```
 
+```
 ### Другие методы Payselection API:
 
 1. Получение статуса одной транзакции

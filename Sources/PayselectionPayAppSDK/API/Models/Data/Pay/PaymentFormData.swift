@@ -10,7 +10,7 @@ import Foundation
 public struct PaymentFormData {
     
     public var amount: String
-    public var currency: Currency
+    public var currency: String
     public var cardNumber: String
     public var cardExpMonth: String
     public var cardExpYear: String
@@ -19,10 +19,10 @@ public struct PaymentFormData {
     public var messageExpiration: String
     public var orderId: String
     public var description: String
-    public var customerInfo: CustomerInfo
+    public var customerInfo: CustomerInfo?
     
     public init(amount: String,
-                currency: Currency,
+                currency: String,
                 cardNumber: String,
                 cardExpMonth: String,
                 cardExpYear: String,
@@ -31,7 +31,7 @@ public struct PaymentFormData {
                 messageExpiration: String,
                 orderId: String,
                 description: String,
-                customerInfo: CustomerInfo) {
+                customerInfo: CustomerInfo?) {
         self.amount = amount
         self.currency = currency
         self.cardNumber = cardNumber

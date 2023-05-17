@@ -11,7 +11,7 @@ struct PaymentData: Codable {
     
     var orderId: String
     var amount: String
-    var currency: Currency
+    var currency: String
     var description: String
     var rebillFlag: Bool?
     var customerInfo: CustomerInfo

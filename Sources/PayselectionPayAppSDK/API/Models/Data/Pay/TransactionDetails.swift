@@ -10,7 +10,7 @@ import Foundation
 public struct TransactionDetails: Codable {
     
     var amount: String
-    var currency: Currency
+    var currency: String
     
     enum CodingKeys: String, CodingKey {
         case amount = "Amount"

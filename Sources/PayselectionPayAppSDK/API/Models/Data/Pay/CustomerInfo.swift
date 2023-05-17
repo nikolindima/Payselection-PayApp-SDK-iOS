@@ -15,7 +15,7 @@ public struct CustomerInfo: Codable {
     public var town: String?
     public var zip: String?
     public var country: String?
-    public var ip: String
+    public var ip: String?
     
     enum CodingKeys: String, CodingKey {
         case email = "Email"
@@ -35,7 +35,7 @@ public struct CustomerInfo: Codable {
                 town: String? = nil,
                 zip: String? = nil,
                 country: String? = nil,
-                ip: String) {
+                ip: String? = nil) {
         self.email = email
         self.phone = phone
         self.language = language

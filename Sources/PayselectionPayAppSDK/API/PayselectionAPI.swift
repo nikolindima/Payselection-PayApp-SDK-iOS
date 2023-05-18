@@ -39,14 +39,14 @@ public class PayselectionAPI {
             return
         }
         
-        let cutormerInfo = getCustomerInfo(paymentFormData.customerInfo)
+        let customerInfo = getCustomerInfo(paymentFormData.customerInfo)
         
         let paymentDetails = PaymentDetails(type: .internal , payToken: token)
         let paymentData = PaymentData(orderId: paymentFormData.orderId,
                                       amount: transactionDetails.amount,
                                       currency: transactionDetails.currency,
                                       description: paymentFormData.description,
-                                      customerInfo: cutormerInfo,
+                                      customerInfo: customerInfo,
                                       paymentMethod: .token,
                                       paymentDetails: paymentDetails)
         
@@ -54,7 +54,9 @@ public class PayselectionAPI {
         let headers = self.generatePayHeaders(merchantId: self.merchantCreds.merchantId,
                                               requestURL: PayselectionHTTPResource.pay.rawValue,
                                               requestBody: requestBodyString)
-        let request = PayRequest(body: paymentData, headers: headers)
+        let request = PayRequest(path: self.merchantCreds.networkConfig.serverUrl,
+                                 body: paymentData,
+                                 headers: headers)
         request.execute(
             onSuccess: { result in
                 completion(.success(result))
@@ -71,11 +73,14 @@ public class PayselectionAPI {
         
         let headers = generateTransactionsHeader(merchantId: merchantCreds.merchantId,
                                                  httpMethod: .get,
-                                                 requestURL:PayselectionHTTPResource.transactionStatus.rawValue.appending(transactionId),
+                                                 requestURL: PayselectionHTTPResource.transactionStatus.rawValue.appending(transactionId),
                                                  transactionKey: transactionKey,
                                                  requestBody: nil)
 
-        let request = TransactionStatusRequest(body: nil, headers: headers, orderId: transactionId)
+        let request = TransactionStatusRequest(path: self.merchantCreds.networkConfig.serverUrl,
+                                               body: nil,
+                                               headers: headers,
+                                               orderId: transactionId)
         request.execute(
             onSuccess: { result in
                 completion(.success(result))

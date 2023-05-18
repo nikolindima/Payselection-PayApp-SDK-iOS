@@ -10,6 +10,6 @@ import Foundation
 class TransactionStatusRequest: BaseRequest, PayselectionRequestType {
     typealias ResponseType = StatusResult
     var data: PayselectionRequest {
-        return PayselectionRequest(path: PayselectionHTTPResource.transactionStatus.asUrl().appending(orderId ?? ""), method: .get, body: nil, headers: headers)
+        return PayselectionRequest(path: PayselectionHTTPResource.transactionStatus.asUrl(networkUrl: path).appending(orderId ?? ""), method: .get, body: nil, headers: headers)
     }
 }

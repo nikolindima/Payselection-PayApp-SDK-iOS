@@ -8,13 +8,12 @@
 import Foundation
 
 enum PayselectionHTTPResource: String {
-    private static let baseURLString = "https://gw.payselection.com"
     
     case pay = "/payments/requests/public"
     case transactionStatus = "/transactions/"
     
     
-    func asUrl() -> String {
-        return PayselectionHTTPResource.baseURLString.appending(self.rawValue)
+    func asUrl(networkUrl: String) -> String {
+        return networkUrl.appending(self.rawValue)
     }
 }

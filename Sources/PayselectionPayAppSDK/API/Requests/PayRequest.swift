@@ -10,6 +10,6 @@ import Foundation
 class PayRequest: BaseRequest, PayselectionRequestType {
     typealias ResponseType = PayResult
     var data: PayselectionRequest {
-        return PayselectionRequest(path: PayselectionHTTPResource.pay.asUrl(), method: .post, body: body, headers: headers)
+        return PayselectionRequest(path: PayselectionHTTPResource.pay.asUrl(networkUrl: path), method: .post, body: body, headers: headers)
     }
 }

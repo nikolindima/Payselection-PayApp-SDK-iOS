@@ -11,7 +11,7 @@ public struct NetworkConfig {
     public var serverUrl: String
     
     public init(serverUrl: String? = nil) {
-        self.serverUrl = serverUrl ?? "https://gw.payselection.com"
+        self.serverUrl = serverUrl ?? "https://pgw.payselection.com"
     }
     
 }

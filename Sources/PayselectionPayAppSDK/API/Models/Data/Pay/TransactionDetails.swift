@@ -9,8 +9,8 @@ import Foundation
 
 public struct TransactionDetails: Codable {
     
-    var amount: String
-    var currency: String
+    public var amount: String
+    public var currency: String
     
     enum CodingKeys: String, CodingKey {
         case amount = "Amount"

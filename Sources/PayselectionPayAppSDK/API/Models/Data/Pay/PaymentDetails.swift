@@ -8,8 +8,8 @@
 import Foundation
 
 public struct PaymentDetails: Codable {
-    var type: PaymentDetailsType
-    var payToken: String
+    public var type: PaymentDetailsType
+    public var payToken: String
     
     enum CodingKeys: String, CodingKey {
         case type = "Type"

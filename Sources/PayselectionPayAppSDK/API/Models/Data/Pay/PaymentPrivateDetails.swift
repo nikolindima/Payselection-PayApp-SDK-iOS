@@ -9,10 +9,10 @@ import Foundation
 
 public struct PaymentPrivateDetails: Codable {
     
-    var transactionDetails: TransactionDetails
-    var paymentMethod: PaymentMethod
-    var paymentDetails: CardDetails
-    var messageExpiration: String
+    public var transactionDetails: TransactionDetails
+    public var paymentMethod: PaymentMethod
+    public var paymentDetails: CardDetails
+    public var messageExpiration: String
     
     enum CodingKeys: String, CodingKey {
         case transactionDetails = "TransactionDetails"

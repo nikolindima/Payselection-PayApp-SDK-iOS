@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct ReceiptData: Codable {
-    var timestamp: String
-    var externalId: String
-    var receipt: Receipt
+public struct ReceiptData: Codable {
+    public var timestamp: String
+    public var externalId: String
+    public var receipt: Receipt
 }
 
-struct Receipt: Codable {
+public struct Receipt: Codable {
     
 }

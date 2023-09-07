@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct PaymentData: Codable {
+public struct PaymentData: Codable {
     
-    var orderId: String
-    var amount: String
-    var currency: String
-    var description: String
-    var rebillFlag: Bool?
-    var customerInfo: CustomerInfo
-    var extraData: ExtraData?
-    var paymentMethod: PaymentMethod
-    var receiptData: ReceiptData?
-    var paymentDetails: PaymentDetails
+    public var orderId: String
+    public var amount: String
+    public var currency: String
+    public var description: String
+    public var rebillFlag: Bool?
+    public var customerInfo: CustomerInfo
+    public var extraData: ExtraData?
+    public var paymentMethod: PaymentMethod
+    public var receiptData: ReceiptData?
+    public var paymentDetails: PaymentDetails
     
     enum CodingKeys: String, CodingKey {
         case orderId = "OrderId"
@@ -34,7 +34,7 @@ struct PaymentData: Codable {
     }
 }
 
-enum PaymentMethod: String, Codable {
+public enum PaymentMethod: String, Codable {
     case card = "Card"
     case token = "Token"
 }

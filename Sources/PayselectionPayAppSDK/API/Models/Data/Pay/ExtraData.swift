@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct ExtraData: Codable {
+public struct ExtraData: Codable {
     
 }

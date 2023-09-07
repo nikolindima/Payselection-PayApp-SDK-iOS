@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct CardDetails: Codable {
+public struct CardDetails: Codable {
     
-    var cardNumber: String
-    var expMonth: String
-    var expYear: String
-    var cardholderName: String
-    var cvc: String
+    public var cardNumber: String
+    public var expMonth: String
+    public var expYear: String
+    public var cardholderName: String
+    public var cvc: String
     
     enum CodingKeys: String, CodingKey {
         case cardNumber = "CardNumber"

@@ -22,4 +22,12 @@ public struct CardDetails: Codable {
         case cardholderName = "CardholderName"
         case cvc = "CVC"
     }
+    
+    public init(cardNumber: String, expMonth: String, expYear: String, cardholderName: String, cvc: String) {
+        self.cardNumber = cardNumber
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.cardholderName = cardholderName
+        self.cvc = cvc
+    }
 }

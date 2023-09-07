@@ -20,4 +20,11 @@ public struct PaymentPrivateDetails: Codable {
         case paymentDetails = "PaymentDetails"
         case messageExpiration = "MessageExpiration"
     }
+    
+    public init(transactionDetails: TransactionDetails, paymentMethod: PaymentMethod, paymentDetails: CardDetails, messageExpiration: String) {
+        self.transactionDetails = transactionDetails
+        self.paymentMethod = paymentMethod
+        self.paymentDetails = paymentDetails
+        self.messageExpiration = messageExpiration
+    }
 }

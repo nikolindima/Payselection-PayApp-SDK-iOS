@@ -16,4 +16,9 @@ public struct TransactionDetails: Codable {
         case amount = "Amount"
         case currency = "Currency"
     }
+    
+    public init(amount: String, currency: String) {
+        self.amount = amount
+        self.currency = currency
+    }
 }

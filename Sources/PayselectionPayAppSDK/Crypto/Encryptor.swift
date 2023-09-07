@@ -9,9 +9,9 @@ import Foundation
 import CryptoSwift
 import secp256k1
 
-struct Encryptor {
+public struct Encryptor {
     
-    func makeCryptogram(publicKey: String, privateDetails: PaymentPrivateDetails) throws -> String {
+    public func makeCryptogram(publicKey: String, privateDetails: PaymentPrivateDetails) throws -> String {
         do {
             let message = try getJSONString(from: privateDetails)
             return try encrypt(pubKey: publicKey, message: message)

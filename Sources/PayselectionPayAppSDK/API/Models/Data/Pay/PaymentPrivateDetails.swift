@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PaymentPrivateDetails: Codable {
+public struct PaymentPrivateDetails: Codable {
     
     var transactionDetails: TransactionDetails
     var paymentMethod: PaymentMethod

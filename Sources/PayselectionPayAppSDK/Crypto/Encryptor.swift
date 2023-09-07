@@ -11,6 +11,8 @@ import secp256k1
 
 public struct Encryptor {
     
+    public init() {}
+    
     public func makeCryptogram(publicKey: String, privateDetails: PaymentPrivateDetails) throws -> String {
         do {
             let message = try getJSONString(from: privateDetails)

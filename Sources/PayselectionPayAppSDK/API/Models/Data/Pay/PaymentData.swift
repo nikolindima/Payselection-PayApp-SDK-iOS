@@ -37,6 +37,7 @@ public struct PaymentData: Codable {
 public enum PaymentMethod: String, Codable {
     case card = "Card"
     case token = "Token"
+    case criptogram = "Ctyptogram"
 }
 
 
